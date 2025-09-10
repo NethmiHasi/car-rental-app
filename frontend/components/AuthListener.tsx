@@ -11,7 +11,16 @@ export default function AuthListener() {
 
     useEffect(() => {
         const unsub = onAuthStateChanged(auth, (firebaseUser) => {
-            dispatch(setUser(firebaseUser));
+            if (firebaseUser) {
+                dispatch(
+                    setUser({
+                        uid: firebaseUser.uid,
+                        email: firebaseUser.email,
+                        displayName: firebaseUser.displayName,
+                        phoneNumber: firebaseUser.phoneNumber,
+                    })
+                )
+            }
 
         });
         return () => unsub();

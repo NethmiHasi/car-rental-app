@@ -1,10 +1,6 @@
-"use client";
 import type { Metadata } from "next";
 import "./globals.css";
-import { Provider } from "react-redux";
-import { store } from "@/store";
-import { AuthListener } from "@/components";
-
+import { Providers } from "@/components";
 
 export const metadata: Metadata = {
   title: "Car Rental",
@@ -19,10 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="relative">
-        <Provider store={store}>
-          <AuthListener />
+        <Providers>
           {children}
-        </Provider>
+        </Providers>
 
       </body>
     </html>
