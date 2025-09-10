@@ -1,5 +1,9 @@
+"use client";
 import type { Metadata } from "next";
 import "./globals.css";
+import { Provider } from "react-redux";
+import { store } from "@/store";
+import { AuthListener } from "@/components";
 
 
 export const metadata: Metadata = {
@@ -15,7 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="relative">
-        {children}
+        <Provider store={store}>
+          <AuthListener />
+          {children}
+        </Provider>
+
       </body>
     </html>
   );
