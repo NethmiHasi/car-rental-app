@@ -25,7 +25,7 @@ export default function LoginPage() {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             setMessage("Login successful");
-            router.push("/register");
+            router.push("/");
         } catch (err: unknown) {
             const error = err as { code?: string; message?: string };
 
