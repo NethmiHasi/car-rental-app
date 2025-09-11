@@ -63,13 +63,12 @@ car-rental-app/
 ├─ frontend/          # Next.js frontend application
 │  ├─ app/            # Pages and layouts
 │  ├─ components/     # Reusable React components
-│  ├─ hooks/          # Custom React hooks
 │  ├─ redux/          # Redux slices and store
 │  ├─ public/         # Images, icons, static files
 │  └─ package.json    # Frontend dependencies
-│        
+├─ backend/           # (Optional) Backend API
 ├─ README.md          # Project documentation
-
+└─ package-lock.json
 
 🌐 Deployment
 
