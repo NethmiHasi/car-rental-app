@@ -43,7 +43,7 @@ This project allows users to browse available cars, make bookings, and see their
 ```bash
 git clone https://github.com/NethmiHasi/car-rental-app.git
 
-1. Navigate to the frontend folder:
+# Navigate to the frontend folder:
 
 cd car-rental-app/frontend
 
