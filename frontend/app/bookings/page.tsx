@@ -33,7 +33,7 @@ export default function MyBookings() {
 
                 {bookings.length === 0 ? (
                     <div className="text-center text-gray-600 mt-10">You have no bookings yet.</div>
-                ) :  <BookingsTable bookings={bookings} />}
+                ) : <BookingsTable bookings={bookings} />}
             </div>
         </div>
     );
