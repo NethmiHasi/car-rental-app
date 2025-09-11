@@ -1,6 +1,6 @@
 import { db } from "@/lib/firebaseClient";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc, doc, updateDoc, deleteDoc } from "firebase/firestore";
 
 export interface Booking {
     id?: string;
@@ -58,6 +58,35 @@ export const createBooking = createAsyncThunk(
     }
 );
 
+export const updateBooking = createAsyncThunk(
+    "bookings/updateBooking",
+    async (
+        { id, startDate, endDate }: { id: string; startDate: string; endDate: string },
+        { rejectWithValue }
+    ) => {
+        try {
+            const docRef = doc(db, "bookings", id);
+            await updateDoc(docRef, { startDate, endDate });
+            return { id, startDate, endDate };
+        } catch (error) {
+            return rejectWithValue("Failed to update booking");
+        }
+    }
+);
+
+export const deleteBooking = createAsyncThunk(
+    "bookings/deleteBooking",
+    async (id: string, { rejectWithValue }) => {
+        try {
+            const docRef = doc(db, "bookings", id);
+            await deleteDoc(docRef);
+            return id;
+        } catch (error) {
+            return rejectWithValue("Failed to delete booking");
+        }
+    }
+);
+
 export const bookingSlice = createSlice({
     name: "booking",
     initialState,
@@ -87,6 +116,15 @@ export const bookingSlice = createSlice({
             .addCase(fetchBookings.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
+            })
+            .addCase(updateBooking.fulfilled, (state, action) => {
+                const index = state.bookings.findIndex(b => b.id === action.payload.id);
+                if (index !== -1) {
+                    state.bookings[index] = { ...state.bookings[index], ...action.payload };
+                }
+            })
+            .addCase(deleteBooking.fulfilled, (state, action) => {
+                state.bookings = state.bookings.filter(b => b.id !== action.payload);
             });
     }
 });

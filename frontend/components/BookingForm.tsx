@@ -1,9 +1,9 @@
 "use client";
 
 import { AppDispatch, RootState } from "@/store";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createBooking } from "@/store/slices/bookingSlice";
+import { Booking, createBooking, updateBooking } from "@/store/slices/bookingSlice";
 import { useRouter } from "next/navigation";
 
 
@@ -13,6 +13,7 @@ interface BookingFormProps {
     price: number;
     open: boolean;
     onClose: () => void;
+    bookingToEdit?: Booking;
 }
 
 export default function BookingForm({
@@ -21,6 +22,7 @@ export default function BookingForm({
     price,
     open,
     onClose,
+    bookingToEdit,
 }: BookingFormProps) {
     const dispatch = useDispatch<AppDispatch>();
     const user = useSelector((state: RootState) => state.auth.user);
@@ -28,6 +30,16 @@ export default function BookingForm({
     const [endDate, setEndDate] = useState("");
     const loading = useSelector((state: RootState) => state.booking.loading);
     const router = useRouter();
+
+    useEffect(() => {
+        if (bookingToEdit) {
+            setStartDate(bookingToEdit.startDate);
+            setEndDate(bookingToEdit.endDate);
+        } else {
+            setStartDate("");
+            setEndDate("");
+        }
+    }, [bookingToEdit, open]);
 
 
     const totalDays = useMemo(() => {
@@ -44,21 +56,33 @@ export default function BookingForm({
         if (!user) return alert("Please login to book");
         if (!startDate || !endDate || totalDays <= 0)
             return alert("Please select start and end date");
+        if (new Date(endDate) <= new Date(startDate)) {
+            return alert("End date must be after start date");
+        }
+        if (bookingToEdit?.id) {
 
-        await dispatch(
-            createBooking({
-                userId: user.uid,
-                carId,
-                carName,
-                startDate,
-                endDate,
-                price: totalPrice,
-            })
+            await dispatch(
+                updateBooking({ id: bookingToEdit.id, startDate, endDate })
+            );
+            alert("Booking updated!");
+        } else {
+            await dispatch(
+                createBooking({
+                    userId: user.uid,
+                    carId,
+                    carName,
+                    startDate,
+                    endDate,
+                    price: totalPrice,
+                })
 
-        );
-        alert("Booking successful!");
+            );
+            alert("Booking successful!");
+
+        }
+
         onClose();
-        router.push("/my-bookings");
+        router.push("/bookings");
     };
 
     if (!open) return null;
@@ -74,7 +98,7 @@ export default function BookingForm({
                     ✕
                 </button>
 
-                <h2 className="text-3xl font-extrabold mb-6 text-center text-indigo-700">Book {carName}</h2>
+                <h2 className="text-3xl font-extrabold mb-6 text-center text-indigo-700">{bookingToEdit ? `Edit Booking` : `Book ${carName}`}</h2>
 
                 <div className="space-y-5">
                     <div>
@@ -113,7 +137,13 @@ export default function BookingForm({
                         className="w-full bg-indigo-600 text-white py-3 rounded-xl hover:bg-indigo-700 transition-colors duration-200 font-semibold"
                         disabled={loading}
                     >
-                        {loading ? "Booking..." : "Confirm Booking"}
+                        {loading
+                            ? bookingToEdit
+                                ? "Updating..."
+                                : "Booking..."
+                            : bookingToEdit
+                                ? "Update Booking"
+                                : "Confirm Booking"}
                     </button>
                 </div>
             </div>
