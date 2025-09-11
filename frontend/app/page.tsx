@@ -4,13 +4,17 @@ import { Navbar } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebaseClient";
 import Image from "next/image";
 
 interface Car {
-  id: number;
-  name: string;
+  id: string;
+  make: string;
+  model: string;
   price: number;
+  year: number
   image: string;
   description: string;
 }
@@ -19,21 +23,41 @@ export default function Home() {
   const user = useSelector((state: RootState) => state.auth.user);
   const router = useRouter();
 
-  const [cars] = useState<Car[]>([
-    { id: 1, name: "Toyota Corolla", price: 50, image: "/toyota_corolla.jpg", description: "Reliable and fuel-efficient sedan." },
-    { id: 2, name: "Honda Civic", price: 60, image: "/cars/car2.jpg", description: "Comfortable and stylish sedan." },
-    { id: 3, name: "BMW 3 Series", price: 120, image: "/cars/car3.jpg", description: "Luxury and high performance." },
-    { id: 4, name: "Ford Mustang", price: 150, image: "/cars/car4.jpg", description: "Sporty and powerful coupe." },
-    { id: 5, name: "Jeep Wrangler", price: 130, image: "/cars/car5.jpg", description: "Perfect for off-road adventures." },
-  ]);
+  const [cars, setCars] = useState<Car[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleBooking = (carId: number) => {
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const carCollection = collection(db, "cars");
+        const carSnapshot = await getDocs(carCollection);
+        const carList = carSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+
+        })) as Car[];
+        setCars(carList);
+
+
+      } catch (error) {
+        console.log(error);
+
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCars();
+  }, []);
+
+  const handleBooking = (carId: string) => {
     if (!user) {
       router.push("/login");
       return;
     }
     router.push(`/booking/${carId}`);
   };
+  if (loading) return <div className="text-center mt-20">Loading cars...</div>;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -48,12 +72,12 @@ export default function Home() {
             <h1 className="text-4xl lg:text-5xl  font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-indigo-400 animate-slideIn">
               Drive Your Dream
             </h1>
-            <p className="text-lg lg:text-xl  text-gray-700 leading-relaxed animate-slideIn delay-200">
+            <p className="text-lg lg:text-xl  text-gray-700 leading-relaxed animate-slideIn200">
               Explore our premium collection of cars, designed for style, comfort, and unforgettable adventures. Your perfect ride awaits!
             </p>
             <button
               onClick={() => router.push(user ? "/booking" : "/login")}
-              className="bg-indigo-600  text-white font-semibold py-3 px-8 rounded-full hover:bg-indigo-700 transition animate-slideIn delay-400"
+              className="bg-indigo-600  text-white font-semibold py-3 px-8 rounded-full hover:bg-indigo-700 transition animate-slideIn400"
             >
               Start Booking
             </button>
@@ -84,13 +108,13 @@ export default function Home() {
               <div className="relative w-full h-44">
                 <Image
                   src={car.image}
-                  alt={car.name}
+                  alt={car.make}
                   fill
                   className="object-cover"
                 />
               </div>
               <div className="p-4 text-center">
-                <h3 className="text-xl font-semibold text-indigo-700">{car.name}</h3>
+                <h3 className="text-xl font-semibold text-indigo-700">{car.make}</h3>
                 <p className="text-gray-500 mb-2">{car.description}</p>
                 <p className="text-indigo-600 font-bold text-lg mb-3">${car.price}/day</p>
                 <button
@@ -105,18 +129,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Animations */}
-      <style jsx>{`
-        @keyframes slideIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-slideIn {
-          animation: slideIn 0.6s forwards;
-        }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-400 { animation-delay: 0.4s; }
-      `}</style>
+
     </div>
   );
 }
