@@ -57,7 +57,28 @@ Open http://localhost:3000
  in your browser.
 
 
+ 📦 Folder Structure
+
+car-rental-app/
+├─ frontend/          # Next.js frontend application
+│  ├─ app/            # Pages and layouts
+│  ├─ components/     # Reusable React components
+│  ├─ hooks/          # Custom React hooks
+│  ├─ redux/          # Redux slices and store
+│  ├─ public/         # Images, icons, static files
+│  └─ package.json    # Frontend dependencies
+│        
+├─ README.md          # Project documentation
 
 
+🌐 Deployment
+
+The application is deployed on Vercel:
+https://car-rental-app-lemon.vercel.app
 
 
+👩‍💻 Author
+
+Nethmi Hasinthara
+
+GitHub: https://github.com/NethmiHasi
