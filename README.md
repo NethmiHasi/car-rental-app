@@ -38,16 +38,26 @@ This project allows users to browse available cars, make bookings, and see their
 
 ### Installation
 
-1. Clone the repository:
 
 ```bash
+#Clone the repository:
 git clone https://github.com/NethmiHasi/car-rental-app.git
 
 # Navigate to the frontend folder:
-
 cd car-rental-app/frontend
 
-1. 
+# Install dependencies
+npm install
+
+#run the development server
+npm run dev
+
+```
+Open http://localhost:3000
+ in your browser.
+
+
+
 
 
 
