@@ -57,7 +57,7 @@ Open http://localhost:3000
  in your browser.
 
 
- 📦 Folder Structure
+### 📦 Folder Structure
 
 ```bash
 car-rental-app/
@@ -73,14 +73,14 @@ car-rental-app/
 
 ```
 
-🌐 Deployment
+### 🌐 Deployment
 
 The application is deployed on Vercel:
 https://car-rental-app-lemon.vercel.app
 
 
 
-👩‍💻 Author
+### 👩‍💻 Author
 
 Nethmi Hasinthara
 
