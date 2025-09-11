@@ -24,7 +24,9 @@ This project allows users to browse available cars, make bookings, and see their
 
 - **Frontend:** Next.js + TypeScript + Tailwind CSS  
 - **State Management:** Redux Toolkit  
-- **Authentication & Database:** Firebase Authentication & Firestore  
+- **Authentication :** Firebase Authentication 
+- **Backend:** Node.js + Express
+- **Database:** Firestore + MongoDB Atlas (via )
 - **Deployment:** Vercel  
 
 ---
