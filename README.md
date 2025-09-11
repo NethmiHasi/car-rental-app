@@ -56,6 +56,7 @@ npm run dev
 Open http://localhost:3000
  in your browser.
 
+---
 
 ### 📦 Folder Structure
 
@@ -73,12 +74,14 @@ car-rental-app/
 
 ```
 
+---
+
 ### 🌐 Deployment
 
 The application is deployed on Vercel:
 https://car-rental-app-lemon.vercel.app
 
-
+---
 
 ### 👩‍💻 Author
 
