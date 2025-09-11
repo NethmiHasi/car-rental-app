@@ -1,6 +1,6 @@
 "use client";
 
-import { HeroSection, Navbar, CarCard, BookingForm } from "@/components";
+import { HeroSection, Navbar, CarCard, BookingForm, Footer } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useRouter } from "next/navigation";
@@ -79,6 +79,7 @@ export default function Home() {
           onClose={() => setSelectedCar(null)}
         />
       )}
+      <Footer />
 
 
 

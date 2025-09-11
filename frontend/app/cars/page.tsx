@@ -1,6 +1,6 @@
 "use client";
 
-import { Navbar, CarCard, BookingForm } from "@/components";
+import { Navbar, CarCard, BookingForm, Footer } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useRouter } from "next/navigation";
@@ -67,6 +67,7 @@ export default function CarsPage() {
                     onClose={() => setSelectedCar(null)}
                 />
             )}
+            <Footer />
         </div>
     );
 }

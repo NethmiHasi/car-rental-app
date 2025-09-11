@@ -1,6 +1,6 @@
 "use client";
 
-import { BookingsTable, Navbar } from "@/components";
+import { BookingsTable, Footer, Navbar } from "@/components";
 import { AppDispatch, RootState } from "@/store";
 import { fetchBookings } from "@/store/slices/bookingSlice";
 import { useEffect } from "react";
@@ -26,15 +26,18 @@ export default function MyBookings() {
     return (
         <div className="min-h-screen bg-gray-50">
             <Navbar />
-            <div className="container mx-auto px-6 py-12 pt-24">
+            <main className="container mx-auto px-6 py-12 pt-24 flex-1">
                 <h1 className="text-3xl md:text-4xl font-bold text-indigo-700 mb-10 text-center">
                     My Bookings
                 </h1>
 
                 {bookings.length === 0 ? (
                     <div className="text-center text-gray-600 mt-10">You have no bookings yet.</div>
-                ) : <BookingsTable bookings={bookings} />}
-            </div>
+                ) : (
+                    <BookingsTable bookings={bookings} />
+                )}
+            </main>
+            <Footer />
         </div>
     );
 }
