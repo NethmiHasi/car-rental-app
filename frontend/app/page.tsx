@@ -16,6 +16,8 @@ interface Car {
   price: number;
   year: number
   image: string;
+  seat:number;
+  availability:boolean;
   description: string;
 }
 
@@ -63,11 +65,11 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
 
-      {/* Hero Section */}
+
       <section className="relative bg-gradient-to-r from-indigo-100 via-amber-50 to-white py-12 overflow-hidden">
         <div className="container mx-auto flex flex-col-reverse lg:flex-row items-center px-6 lg:px-0 gap-6">
 
-          {/* Left Side */}
+
           <div className="lg:w-1/2 text-center lg:text-left space-y-6 lg:pl-12">
             <h1 className="text-4xl lg:text-5xl  font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-indigo-400 animate-slideIn">
               Drive Your Dream
@@ -83,7 +85,7 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Right Side */}
+
           <div className="lg:w-1/2 relative w-full h-56 lg:h-80">
             <div className="absolute -top-4 -right-4 w-80 h-52 lg:w-[28rem] lg:h-80 bg-white rounded-3xl shadow-2xl transform rotate-3"></div>
             <Image
@@ -96,7 +98,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Car List Section */}
+
       <section className="container mx-auto px-6 py-10">
         <h2 className="text-3xl font-bold text-center text-indigo-700 mb-16">Our Premium Cars</h2>
         <div className="flex flex-wrap justify-center gap-8">
