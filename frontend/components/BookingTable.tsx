@@ -1,6 +1,10 @@
 "use client";
 
-import { Booking } from "@/store/slices/bookingSlice";
+import { AppDispatch } from "@/store";
+import { Booking, deleteBooking } from "@/store/slices/bookingSlice";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import BookingForm from "./BookingForm";
 
 interface BookingsTableProps {
     bookings: Booking[];
@@ -8,6 +12,11 @@ interface BookingsTableProps {
 
 export default function BookingsTable({ bookings }: BookingsTableProps) {
     const today = new Date();
+    const dispatch = useDispatch<AppDispatch>();
+
+
+    const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+    const [openForm, setOpenForm] = useState(false);
 
     return (
         <div className="overflow-x-auto">
@@ -36,10 +45,26 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
                                     <td className="px-6 py-4 flex gap-2">
                                         {isUpcoming && (
                                             <>
-                                                <button className="px-3 py-1 bg-yellow-500 text-white rounded-xl hover:bg-yellow-600 transition">
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedBooking(booking);
+                                                        setOpenForm(true);
+                                                    }}
+
+                                                    className="px-3 py-1 bg-yellow-500 text-white rounded-xl hover:bg-yellow-600 transition"
+                                                >
                                                     Edit
                                                 </button>
-                                                <button className="px-3 py-1 bg-red-500 text-white rounded-xl hover:bg-red-600 transition">
+                                                <button
+                                                    onClick={() => {
+                                                        const confirmDelete = window.confirm(
+                                                            "Are you sure you want to cancel this booking?"
+                                                        );
+                                                        if (confirmDelete) {
+                                                            dispatch(deleteBooking(booking.id!));
+                                                        }
+                                                    }}
+                                                    className="px-3 py-1 bg-red-500 text-white rounded-xl hover:bg-red-600 transition">
                                                     Cancel
                                                 </button>
                                             </>
@@ -51,6 +76,18 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
                     </tbody>
                 </table>
             </div>
+
+            <BookingForm
+                open={openForm}
+                onClose={() => {
+                    setOpenForm(false);
+                    setSelectedBooking(null);
+                }}
+                price={selectedBooking?.price || 0}
+                carId={selectedBooking?.carId || ""} 
+                carName={selectedBooking?.carName || ""}
+                bookingToEdit={selectedBooking || undefined}
+            />
         </div>
     );
 }
