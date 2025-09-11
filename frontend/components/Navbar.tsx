@@ -31,14 +31,14 @@ export default function Navbar() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16 items-center relative">
 
-                    {/* Left: Brand */}
+
                     <div className="flex-shrink-0">
                         <Link href="/" className="text-2xl font-bold text-indigo-600">
                             Taxigo
                         </Link>
                     </div>
 
-                    {/* Center: Navigation Links */}
+
                     <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 space-x-10">
                         {navLinks.map((link) => (
                             <Link
@@ -51,7 +51,7 @@ export default function Navbar() {
                         ))}
                     </div>
 
-                    {/* Right: User Actions */}
+
                     <div className="hidden md:flex items-center space-x-4">
                         {user ? (
                             <>
@@ -83,7 +83,7 @@ export default function Navbar() {
                         )}
                     </div>
 
-                    {/* Mobile Menu Button */}
+
                     <div className="md:hidden flex items-center">
                         <button
                             onClick={() => setMobileOpen(!mobileOpen)}
@@ -95,7 +95,7 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {/* Mobile Menu */}
+
             <div className={`md:hidden bg-white shadow-sm transform transition-transform duration-300 ease-in-out ${mobileOpen ? "max-h-96" : "max-h-0 overflow-hidden"}`}>
                 <div className="px-4 pt-4 pb-4 flex flex-col space-y-3 items-center">
                     {navLinks.map((link) => (
