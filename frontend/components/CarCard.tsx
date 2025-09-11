@@ -61,9 +61,14 @@ const CarCard = ({ car, onBooking, onClick, detailed = false }: CarCardProps) =>
               e.stopPropagation();
               onBooking(car.id);
             }}
-            className="w-full bg-indigo-600 text-white py-2 rounded-full hover:bg-indigo-700 transition mt-2"
+            className={`w-full py-2 rounded-full transition mt-2 
+              ${car.availability
+                ? "bg-indigo-600 text-white hover:bg-indigo-700"
+                : "bg-gray-400 text-gray-200 cursor-not-allowed"
+              }`}
+            disabled={!car.availability}
           >
-            Book Now
+            {car.availability ? "Book Now" : "Not Available"}
           </button>
         )}
       </div>

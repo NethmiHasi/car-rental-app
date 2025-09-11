@@ -1,24 +1,37 @@
 "use client";
 
-import { HeroSection, Navbar, CarCard } from "@/components";
+import { HeroSection, Navbar, CarCard, BookingForm } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useRouter } from "next/navigation";
-import { useCars } from "@/hooks/useCars";
+import { Car, useCars } from "@/hooks/useCars";
+import { useState } from "react";
 
 export default function Home() {
   const user = useSelector((state: RootState) => state.auth.user);
   const { cars, loading } = useCars();
   const router = useRouter();
 
+  const [selectedCar, setSelectedCar] = useState<{
+    id: string;
+    make: string;
+    model: string;
+    price: number;
+  } | null>(null);
 
 
-  const handleBooking = (carId: string) => {
+
+  const handleBooking = (car: Car) => {
     if (!user) {
       router.push("/login");
       return;
     }
-    router.push(`/booking/${carId}`);
+    setSelectedCar({
+      id: car.id,
+      make: car.make,
+      model: car.model,
+      price: car.price,
+    });
   };
 
   const handleCardClick = (carId: string) => {
@@ -38,12 +51,22 @@ export default function Home() {
             <CarCard
               key={car.id}
               car={car}
-              onBooking={handleBooking}
+              onBooking={() => handleBooking(car)}
               onClick={() => handleCardClick(car.id)}
             />
           ))}
         </div>
       </section>
+      {selectedCar && (
+        <BookingForm
+          carId={selectedCar.id}
+          carName={`${selectedCar.make} ${selectedCar.model}`}
+          price={selectedCar.price}
+          open={!!selectedCar}
+          onClose={() => setSelectedCar(null)}
+        />
+      )}
+
 
 
     </div>
