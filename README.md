@@ -103,7 +103,6 @@ car-rental-app/
 │  ├─ controllers/    # Route controllers
 │  ├─ models/         # Mongoose models
 │  ├─ routes/         # Express routes
-│  ├─ config/         # Database and environment configuration
 │  ├─ server.js       # Entry point of the backend
 │  └─ package.json    # Backend dependencies
 │
