@@ -7,15 +7,18 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
     const user = useSelector((state: RootState) => state.auth.user);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const router = useRouter()
 
     const handleLogout = async () => {
         try {
             await signOut(auth);
             alert("Logged out successfully!");
+            router.push("/");
         } catch (error) {
             console.log(error);
         }

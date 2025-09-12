@@ -1,7 +1,7 @@
 "use client";
 
 import { auth } from "@/lib/firebaseClient";
-import { setUser } from "@/store/slices/authSlice";
+import { clearUser, setUser } from "@/store/slices/authSlice";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -19,7 +19,9 @@ export default function AuthListener() {
                         displayName: firebaseUser.displayName,
                         phoneNumber: firebaseUser.phoneNumber,
                     })
-                )
+                );
+            } else {
+                dispatch(clearUser());
             }
 
         });
