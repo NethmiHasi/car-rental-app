@@ -16,6 +16,8 @@ This project allows users to browse available cars, make bookings, and see their
 - View own bookings (protected route)
 - Responsive design for desktop and mobile
 - Redux Toolkit for global state management
+- MongoDB Atlas integration
+- Backend APIs with Node.js/Express for user management
 - Clean, modern UI with reusable components (header/footer)
 
 ---
@@ -44,7 +46,11 @@ This project allows users to browse available cars, make bookings, and see their
 ```bash
 #Clone the repository:
 git clone https://github.com/NethmiHasi/car-rental-app.git
+```
 
+### Frontend Setup
+
+```bash
 # Navigate to the frontend folder:
 cd car-rental-app/frontend
 
@@ -60,6 +66,27 @@ Open http://localhost:3000
 
 ---
 
+### Backend Setup
+
+```bash
+# Navigate to the backend folder
+cd car-rental-app/backend
+
+# Install dependencies
+npm install
+
+# Create a .env file with your MongoDB URI
+# Example:
+# MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/carRental
+# PORT=5000
+
+# Start the server
+npm run dev   # if using nodemon
+# or
+node server.js
+
+```
+
 ## 📦 Folder Structure
 
 ```bash
@@ -71,7 +98,15 @@ car-rental-app/
 │  ├─ redux/          # Redux slices and store
 │  ├─ public/         # Images, icons, static files
 │  └─ package.json    # Frontend dependencies
-│        
+│
+├─ backend/           # Node.js + Express backend
+│  ├─ controllers/    # Route controllers
+│  ├─ models/         # Mongoose models
+│  ├─ routes/         # Express routes
+│  ├─ config/         # Database and environment configuration
+│  ├─ server.js       # Entry point of the backend
+│  └─ package.json    # Backend dependencies
+│
 ├─ README.md          # Project documentation
 
 ```
