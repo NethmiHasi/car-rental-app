@@ -1,2 +1,9 @@
 import express from "express";
-const carRouter = express
+import { listCar } from "../controllers/carController";
+import multer from "multer";
+
+const carRouter = express;
+
+carRouter.get("/list", listCar);
+
+export default carRouter;
