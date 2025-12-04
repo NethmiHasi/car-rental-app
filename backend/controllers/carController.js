@@ -34,4 +34,17 @@ const listCar = async (req, res) => {
   }
 };
 
-export default { listCar, addCar };
+const removeCar = async (req, res) => {
+  try {
+    const car = await carModel.findById(req.body.id);
+    fs.unlink(`uploads/${car.image}`, () => {});
+
+    await carModel.findByIdAndDelete(req.body.id);
+    res.json({ success: true, message: "Car removed" });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error" });
+  }
+};
+
+export default { listCar, addCar, removeCar };
