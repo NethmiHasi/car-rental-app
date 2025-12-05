@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({storage:storage});
+const upload = multer({ storage: storage });
 
 carRouter.get("/add", upload.single("image"), addCar);
 carRouter.get("/list", listCar);
